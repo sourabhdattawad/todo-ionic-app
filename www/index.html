@@ -7,6 +7,7 @@
     <title></title>
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -26,20 +27,31 @@
     <ion-pane>
         <ion-header-bar class="bar-dark" align-title="center">
             <h1 class="title">TODO List</h1>
-            <button class="button" ng-click="addItem()"><i class="icon ion-plus-circled"></i></button>
+            <button class="button" ng-click="addItem()"><i class="icon ion-plus"></i></button>
         </ion-header-bar>
-        <ion-content>
+        <div class="bar bar-subheader item-input-inset bar-light">
+
+            <label class="item-input-wrapper">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input ng-model="query"type="search" placeholder="Search">
+            </label>
+        </div>
+        <ion-content class="has-subheader">
             <img src="img/preloader.gif" ng-show="preloader" class="center">
             <ion-list>
                 <!--  <ion-item ng-repeat="item in items">
 
             {{item.name}}
           </ion-item> -->
-                <ion-item ng-repeat="(key,thing) in things">
-                    <ion-option-button class="button-assertive" ng-click="deleteItem(key)">
+                <ion-item ng-repeat="(key,thing) in things | filter:query" ng-class="{purchased:thing.status=='purchased'}">
+                <ion-option-button class="button-balanced" ng-click="scratch(thing)" >
+                        <i class="icon ion-android-done"></i>
+                    </ion-option-button>
+                    <ion-option-button class="button-assertive" ng-click="deleteItem(key)" >
                         <i class="icon ion-trash-b"></i>
                     </ion-option-button>
-                    <i class="icon ion-star"></i> {{thing.item}}
+                    
+                     <h2><i class="icon ion-star"></i> {{thing.item }}</h2>
                 </ion-item>
             </ion-list>
         </ion-content>

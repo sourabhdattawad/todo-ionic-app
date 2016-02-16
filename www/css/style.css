@@ -4,3 +4,23 @@
     margin-right: auto;
     display: block;
 }
+.ion-star{
+	color: #FA5858;
+}
+.ion-plus{
+	color: #FA5858;
+}
+h2 {
+	font-family: 'Raleway', sans-serif;
+	font-size: 200px
+
+}
+.title{
+		font-family: 'Raleway', sans-serif;
+
+}
+
+.purchased{
+	color: red;
+	text-decoration: line-through;
+}

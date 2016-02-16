@@ -5,23 +5,29 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', "firebase"])
 
-.controller('listController', function($scope, $firebaseArray) {
+.controller('listController', function($scope, $firebaseArray,$ionicListDelegate) {
     var ref = new Firebase('https://todosourabh.firebaseio.com/messages');
 
 
-        var messages = $firebaseArray(ref);
+    var messages = $firebaseArray(ref);
 
-   $scope.preloader = "preloader";
+    $scope.preloader = "preloader";
     messages.$loaded()
-      .then(function() {
-          $scope.preloader =null;
-           $scope.things = messages;
-      })
-      .catch(function(error) {
-          console.log("Error:", error);
-      });
+        .then(function() {
+            $scope.preloader = null;
+            $scope.things = messages;
+        })
+        .catch(function(error) {
+            console.log("Error:", error);
+        });
 
+    $scope.scratch= function(thing){
 
+      $scope.thing = thing;
+      $scope.thing['status']  = 'purchased';
+      $ionicListDelegate.closeOptionButtons();
+
+    }
     $scope.addItem = function() {
 
         var name = prompt("What do you need to buy?");
@@ -35,7 +41,7 @@ angular.module('starter', ['ionic', "firebase"])
 
 
     };
-    $scope.deleteItem = function(key){
+    $scope.deleteItem = function(key) {
 
         messages.$remove(key);
     }
