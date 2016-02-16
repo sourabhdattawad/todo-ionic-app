@@ -9,18 +9,24 @@ angular.module('starter', ['ionic', "firebase"])
     var ref = new Firebase('https://todosourabh.firebaseio.com/messages');
 
 
+        var messages = $firebaseArray(ref);
 
-    $scope.items = [];
-    $scope.things = $firebaseArray(ref)
-    var messages = $firebaseArray(ref);
+   $scope.preloader = "preloader";
+    messages.$loaded()
+      .then(function() {
+          $scope.preloader =null;
+           $scope.things = messages;
+      })
+      .catch(function(error) {
+          console.log("Error:", error);
+      });
 
 
     $scope.addItem = function() {
 
         var name = prompt("What do you need to buy?");
         if (name) {
-            $scope.items.push({ 'name': name });
-            console.log(messages);
+
             messages.$add({ item: name }).then(function(ref) {
 
             });
@@ -29,6 +35,10 @@ angular.module('starter', ['ionic', "firebase"])
 
 
     };
+    $scope.deleteItem = function(key){
+
+        messages.$remove(key);
+    }
 
 
 })
